@@ -17,5 +17,16 @@ steps:
 
 - script: |
     npm install
+    npm audit fix  # Attempt to fix vulnerabilities
+  displayName: 'npm install and audit fix'
+
+- script: |
     npm run build
-  displayName: 'npm install and build'
+  displayName: 'npm run build'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathtoPublish: '$(System.DefaultWorkingDirectory)/build'  # Update this based on your actual build output path
+    artifactName: 'drop'
+    publishLocation: 'container'
+  displayName: 'Publish build artifacts'
